@@ -1,1 +1,89 @@
+package sample;
 
+//Classes Methods and Objects
+
+public class Main {
+    public static void Method(String param) {
+        String x = " World";
+        System.out.println(param + x);
+
+
+    }
+    public static void main(String[] args) {
+        Method("Hello");
+        Method("Hello");
+    }
+}
+
+//Inheritance, Polymorphism  and Abstraction
+
+interface inTest {
+// Interface method
+    public void inMethod();
+}
+
+abstract class abTest {
+//    Abstracted class
+    public abstract void abMethod();
+//    No abstract class
+    public void Method() {
+        System.out.println("Test");
+    }
+}
+
+class Class2 extends abTest {
+    public void abMethod() {
+        System.out.println("ABSTRACTION!!!!");
+    }
+}
+
+class Class3 implements inTest {
+    public void inMethod() {
+        System.out.println("INTERFACES!!!");
+    }
+}
+
+class abMain {
+    public static void main(String[] args) {
+        Class2 testClass2 = new Class2();
+        Class3 testClass3 = new Class3();
+        testClass2.abMethod();
+        testClass3.inMethod();
+
+    }
+}
+
+//Packages
+
+//Predefined Packages:
+
+//import test
+
+//Or:
+
+//import java.util.class
+
+//To import a whole package, end the sentence with an asterisk sign (*):
+
+//import java.util.class*
+
+//To Create a package just use the package keyword:
+
+//package mypack;
+
+
+
+//Exceptions
+
+//Use Try and Catch to check for errors (Like try and except in python)
+
+//Finally is used as a statement after the try/catch that is run regardless of the try/catch results
+
+//Throw allows you to return a custom error - used in conjuction with an exception error:
+
+//if (age < 18) {
+//        throw new ArithmeticException("Access denied - You must be at least 18 years old.");
+
+//Lambda
+
+//(parameter1, parameter2) -> expression
