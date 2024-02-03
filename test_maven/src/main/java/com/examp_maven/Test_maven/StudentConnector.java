@@ -1,0 +1,70 @@
+package com.examp_maven.Test_maven;
+
+import com.mongodb.client.*;
+import org.bson.Document;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentConnector {
+    public MongoDatabase database;
+    public String collectionName = "";
+
+    public StudentConnector(String url, String stringCollection) {
+
+        try {
+            MongoClient mongoClient = MongoClients.create(url);
+            database = mongoClient.getDatabase("com_vtx");
+        }
+        catch (Exception exception) {
+           System.err.println("There is an error" + exception);
+        }
+
+    }
+
+    public List<Student> getAllStudents() {
+
+        ArrayList<Student> returns = new ArrayList<>();
+        FindIterable<Document> iterable = database.getCollection(collectionName).find();
+
+        for (Document document : iterable) {
+
+            Student student = new Student(
+                    document.getInteger("year"),
+                    document.getInteger("age") ,
+                    document.getString("surname") ,
+                    document.getString("name"),
+                    document.getString("studentClass")
+            );
+
+            returns.add(student);
+        }
+
+        return returns;
+    }
+    public Student getStudent(String studentName) {
+
+        Document query = new Document("name", studentName);
+        FindIterable<Document> iterable = database.getCollection(collectionName).find(query);
+
+        Document document = iterable.first();
+
+        return new Student(
+                document.getInteger("year"),
+                document.getInteger("age") ,
+                document.getString("surname") ,
+                document.getString("name"),
+                document.getString("studentClass")
+            );
+    }
+    public void addStudent(Student student) {
+
+    }
+    public void deleteStudent(String studentName) {
+        Document query = new Document("name", studentName);
+        database.getCollection(collectionName).deleteOne(query);
+    }
+    public void updateStudent(Student student) {
+    }
+}
