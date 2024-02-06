@@ -59,12 +59,35 @@ public class StudentConnector {
             );
     }
     public void addStudent(Student student) {
+        Document studentDocument = new Document()
 
+                .append("year", student.getYear())
+                .append("age", student.getAge())
+                .append("surname", student.getSurname())
+                .append("name", student.getName())
+                .append("studentClass", student.getStudentClass());
+
+        database.getCollection(collectionName).insertOne(studentDocument);
     }
     public void deleteStudent(String studentName) {
         Document query = new Document("name", studentName);
         database.getCollection(collectionName).deleteOne(query);
     }
-    public void updateStudent(Student student) {
+    public void updateStudent(Student student, String studentName) {
+        Document query = new Document("name", studentName);
+        FindIterable<Document> iterable = database.getCollection(collectionName).find(query);
+
+        Document document = iterable.first();
+
+        Document studentDocument = new Document()
+
+                .append("year", student.getYear())
+                .append("age", student.getAge())
+                .append("surname", student.getSurname())
+                .append("name", student.getName())
+                .append("studentClass", student.getStudentClass());
+
+        database.getCollection(collectionName).updateOne(studentDocument, document);
+
     }
 }
