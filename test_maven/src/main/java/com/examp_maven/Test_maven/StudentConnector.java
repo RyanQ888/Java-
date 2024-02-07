@@ -3,6 +3,8 @@ package com.examp_maven.Test_maven;
 import com.mongodb.client.*;
 import org.bson.Document;
 
+import System.out.println;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -13,9 +15,12 @@ public class StudentConnector {
 
     public StudentConnector(String url, String stringCollection) {
 
+        collectionName = stringCollection;
+
         try {
             MongoClient mongoClient = MongoClients.create(url);
             database = mongoClient.getDatabase("com_vtx");
+
         }
         catch (Exception exception) {
            System.err.println("There is an error" + exception);
@@ -69,15 +74,19 @@ public class StudentConnector {
 
         database.getCollection(collectionName).insertOne(studentDocument);
     }
-    public void deleteStudent(String studentName) {
-        Document query = new Document("name", studentName);
-        database.getCollection(collectionName).deleteOne(query);
-    }
-    public void updateStudent(Student student, String studentName) {
-        Document query = new Document("name", studentName);
-        FindIterable<Document> iterable = database.getCollection(collectionName).find(query);
+    public void deleteStudent(Student student) {
+        Document studentDocument = new Document()
 
-        Document document = iterable.first();
+                .append("year", student.getYear())
+                .append("age", student.getAge())
+                .append("surname", student.getSurname())
+                .append("name", student.getName())
+                .append("studentClass", student.getStudentClass());
+
+        database.getCollection(collectionName).deleteOne(studentDocument);
+    }
+    public void updateStudent(Student student) {
+        Document query = new Document("name", student.getName());
 
         Document studentDocument = new Document()
 
@@ -87,7 +96,7 @@ public class StudentConnector {
                 .append("name", student.getName())
                 .append("studentClass", student.getStudentClass());
 
-        database.getCollection(collectionName).updateOne(studentDocument, document);
+        database.getCollection(collectionName).updateOne(query, studentDocument);
 
     }
 }
