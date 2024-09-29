@@ -3,8 +3,6 @@ package com.examp_maven.Test_maven;
 import com.mongodb.client.*;
 import org.bson.Document;
 
-import System.out.println;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
